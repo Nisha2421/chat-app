@@ -1,17 +1,21 @@
 import React, { lazy } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import { useAuthContext } from "./context/authContext";
 
 const Home = lazy(() => import("./pages/HomePage"));
 const Login = lazy(() => import("./pages/LoginPage"));
 const Profile = lazy(() => import("./pages/ProfilePage"));
 
 const App = () => {
+  const {authUser} = useAuthContext()
   return (
     <div className="bg-[url('./src/assets/bgImage.svg')] bg-contain">
+      <ToastContainer />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/" element={authUser? <Home />: <Navigate  to="/login"/>} />
+        <Route path="/login" element={!authUser? <Login />: <Navigate to="/"/>} />
+        <Route path="/profile" element={authUser? <Profile />: <Navigate to="/login" />} />
       </Routes>
     </div>
   );

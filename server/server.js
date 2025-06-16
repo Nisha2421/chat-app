@@ -24,7 +24,7 @@ export const userSocketap = {} // { userId: socketId }
 
 io.on("connection",(socket) => {
 const userId = socket.handshake.query.userId;
-console.log("user connected", user);
+console.log("user connected", userId);
 if(userId){
     userSocketap[userId] = socket.id;
 
@@ -44,14 +44,22 @@ if(userId){
 app.use(express.json({limit:"4mb"}))
 app.use(cors())
 
+// Catch-all for undefined routes
+// app.use((req, res) => {
+//   res.status(404).json({ success: false, message: "Route not found" });
+// });
+
 // Routes set-up
 app.use("/api/status",(req, res) => res.send("Server is live"))
 app.use('/api/auth',userRouter)
-app.use("./api/messages", messageRouter)
+app.use("/api/messages", messageRouter)
 
 const PORT = process.env.port || 8000;
 connectDB()
-disconnectDB()
+
+
+
+// disconnectDB()
 server.listen(PORT, () => {
     console.log(`server is running on port ${PORT}`);
     
