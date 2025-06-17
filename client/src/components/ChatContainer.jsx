@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import assets, { messagesDummyData } from "../assets/assets";
 import { formatemsgTime } from "../lib/utils";
 import { useChatContext } from "../context/ChatContext";
-import { useAuthContext } from "../context/authContext";
+import { useAuthContext } from "../context/AuthContext";
 import { toast } from "react-toastify";
 
 const ChatContainer = () => {
