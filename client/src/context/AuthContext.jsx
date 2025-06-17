@@ -54,6 +54,7 @@ export const AuthProvider = ({ children }) => {
         connectSocket(data.userdata);
         axios.defaults.headers.common["token"] = data.token;
         setToken(data.token);
+        localStorage.removeItem("token");
         localStorage.setItem("token", data.token);
         toast.success(data.message);
       }else if(data.success && state === 'signup'){
