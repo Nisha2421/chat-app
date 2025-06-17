@@ -65,7 +65,7 @@ const LoginPage = () => {
               onChange={(e) => setEmail(e.target.value)}
               value={email}
               type="email"
-              placeholder="Email Addredd"
+              placeholder="Email Address"
               className="p-2 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               required
             />
@@ -95,7 +95,7 @@ const LoginPage = () => {
           {currentState === "Sign up" ? "Create Account" : "Login Now"}
         </button>
         <div className="flex items-center gap-2 text-sm text-gray-500">
-          <input type="checkbox" />
+          <input type="checkbox" required/>
           <p>Agree to the terms of use & privacy policy</p>
         </div>
         <div className="flex flex-col gap-2">

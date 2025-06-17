@@ -56,6 +56,8 @@ export const AuthProvider = ({ children }) => {
         setToken(data.token);
         localStorage.setItem("token", data.token);
         toast.success(data.message);
+      }else if(data.success && state === 'signup'){
+        toast.success(data.message);
       } else if (!data.success) {
         toast.error(data.message);
       }
