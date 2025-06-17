@@ -44,6 +44,7 @@ const ChatContainer = () => {
   useEffect(() => {
     if (selectedUser) {
       getMessages(selectedUser._id);
+      setInput("")
     }
   }, [selectedUser]);
   useEffect(() => {

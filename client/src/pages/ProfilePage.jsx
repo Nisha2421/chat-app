@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import assets from "../assets/assets";
 import { useAuthContext } from "../context/authContext";
+import { LoadingPage } from "./LoadingPage";
 
 const ProfilePage = () => {
   const { authUser, updateProfile } = useAuthContext();
@@ -10,10 +11,13 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   const [name, setName] = useState(authUser?.fullName);
   const [bio, setbio] = useState(authUser?.bio);
+  const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     if (!selectedImg) {
       await updateProfile({ fullName: name, bio });
+      setIsLoading(false);
       navigate("/");
       return;
     }
@@ -21,8 +25,9 @@ const ProfilePage = () => {
     const reader = new FileReader();
     reader.readAsDataURL(selectedImg);
     reader.onload = async () => {
-      const base64Image = reader.result;      
+      const base64Image = reader.result;
       await updateProfile({ profilePic: base64Image, fullName: name, bio });
+      setIsLoading(false);
       navigate("/");
     };
   };
@@ -85,6 +90,7 @@ const ProfilePage = () => {
           alt=""
         />
       </div>
+      {isLoading&&  <LoadingPage />}
     </div>
   );
 };

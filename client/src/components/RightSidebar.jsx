@@ -8,7 +8,7 @@ import { useState } from "react";
 const RightSidebar = () => {
 const {selectedUser, messages} = useChatContext()    
 const {logout, onlineUser} = useAuthContext()
-const [msgImage, setMsgImage] = useState()
+const [msgImage, setMsgImage] = useState([])
 useEffect(() => {
   setMsgImage(messages.filter(msg => msg.image).map(msg => msg.image))
 }, [messages])
@@ -31,7 +31,7 @@ useEffect(() => {
         <div className="px-5 text-xs">
         <p>Media</p>
         <div className="mt-2 max-h-[200px] overflow-y-scroll grid grid-cols-2 gap-4 opacity-80">
-            {msgImage.map((url,index) => (
+            {msgImage?.map((url,index) => (
                 <div key={index} onClick={() => window.open(url)} className="h-[65px] cursor-pointer rounded">
                     <img src={url} alt="" className="h-full w-full object-cover rounded-md"/>
                 </div>

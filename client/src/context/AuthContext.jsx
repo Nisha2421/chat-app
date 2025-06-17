@@ -14,12 +14,9 @@ export const AuthProvider = ({ children }) => {
   const [onlineUser, setOnlineUser] = useState([]);
   const [socket, setSocket] = useState(null);
 
-
-    //connect socket function to handle socket connection and online users updates
+  //connect socket function to handle socket connection and online users updates
 
   const connectSocket = (userData) => {
-    console.log("!userData || socket?.connected",!userData , socket?.connected);
-    
     if (!userData || socket?.connected) return;
     const newSocket = io(backendUrl, {
       query: {
@@ -33,7 +30,6 @@ export const AuthProvider = ({ children }) => {
     });
   };
 
-  
   // check if user is authenticated and if so, set user data and connect the socket
 
   const checkAuth = async () => {
@@ -52,17 +48,15 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (state, credentials) => {
     try {
-      const {data}  = await axios.post(`/api/auth/${state}`, credentials);
-      console.log("data",data);
-      
-      if (data.success) {
+      const { data } = await axios.post(`/api/auth/${state}`, credentials);
+      if (data.success && state !== "signup") {
         setAuthUser(data.userdata);
         connectSocket(data.userdata);
         axios.defaults.headers.common["token"] = data.token;
         setToken(data.token);
         localStorage.setItem("token", data.token);
         toast.success(data.message);
-      } else {
+      } else if (!data.success) {
         toast.error(data.message);
       }
     } catch (error) {
@@ -85,11 +79,7 @@ export const AuthProvider = ({ children }) => {
 
   const updateProfile = async (body) => {
     try {
-      console.log("body",body);
-      
       const { data } = await axios.put("/api/auth/update-profile", body);
-      console.log("data",data);
-      
       if (data.success) {
         setAuthUser(data.user);
         toast.success("The file updated successfully");
@@ -102,8 +92,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (token) {
       axios.defaults.headers.common["token"] = token;
-          checkAuth();
-
+      checkAuth();
     }
   }, [token]);
 
@@ -114,7 +103,7 @@ export const AuthProvider = ({ children }) => {
     socket,
     login,
     logout,
-    updateProfile
+    updateProfile,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

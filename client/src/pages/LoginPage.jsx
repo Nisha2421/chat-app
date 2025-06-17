@@ -13,10 +13,15 @@ const LoginPage = () => {
   const {login} = useAuthContext()
 
   const onSubmitHandler = (e) => {
-    e.preventDefault();
+    e.preventDefault();    
     if (currentState === "Sign up" && !isDataSubmitted) {
       setIsDataSubmitted(true);
       return;
+    }else{
+      setIsDataSubmitted(false);
+      setEmail("")
+      setPassword("")
+      setCurrentState("Login");
     }
     login(currentState === 'Sign up'? 'signup' : 'login' , {fullName, email, password, bio})
   };
