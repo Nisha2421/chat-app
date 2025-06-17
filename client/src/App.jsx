@@ -10,7 +10,7 @@ const Profile = lazy(() => import("./pages/ProfilePage"));
 const App = () => {
   const {authUser} = useAuthContext()
   return (
-    <div className="bg-[url('./src/assets/bgImage.svg')] bg-contain">
+    <div className="bg-[url('/bgImage.svg')] bg-contain">
       <ToastContainer />
       <Routes>
         <Route path="/" element={authUser? <Home />: <Navigate  to="/login"/>} />

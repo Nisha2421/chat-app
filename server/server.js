@@ -54,13 +54,17 @@ app.use("/api/status",(req, res) => res.send("Server is live"))
 app.use('/api/auth',userRouter)
 app.use("/api/messages", messageRouter)
 
-const PORT = process.env.port || 8000;
-connectDB()
+await connectDB()
 
 
 
 // disconnectDB()
+if(process.env.NODE_ENV !== "production"){
+const PORT = process.env.port || 8000;
 server.listen(PORT, () => {
     console.log(`server is running on port ${PORT}`);
     
 })
+}
+//  Export derver for vercel
+export default server;
