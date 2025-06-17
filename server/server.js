@@ -58,7 +58,7 @@ await connectDB()
 
 
 
-disconnectDB()
+// disconnectDB()
 if(process.env.NODE_ENV !== "production"){
 const PORT = process.env.port || 8000;
 server.listen(PORT, () => {
